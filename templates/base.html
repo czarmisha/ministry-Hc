@@ -1,0 +1,90 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'css/styles.pure.css' %}">
+    <title>{% block title %}title{% endblock%}
+    </title>
+    {%block vue%}{%endblock%}
+</head>
+<body>
+<header>
+    {%include 'inc/_nav.html'%}
+</header>
+<main>
+    <div class="container">
+        {% block page_title %}{% endblock %}
+        <div class="row justify-content-center">
+            <div class="col-lg-3 mt-3">
+                {% block sidebar %}{%include 'inc/_sidebar.html'%}{% endblock %}
+            </div>
+            <div class="col-lg-9">
+
+                {% if messages %}
+                {% for message in messages %}
+                {% if message.tags == 'error' %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+                {% else %}
+                <div class="alert alert-{{ message.tags }}" role="alert">
+                    {{ message }}
+                </div>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+
+                {% block content %} {% endblock %}
+                {% if page_obj.has_other_pages %}
+                <nav aria-label="..." class="ad_pagination">
+                    <ul class="pagination">
+
+                        {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}"
+                               tabindex="-1">Назад</a>
+                        </li>
+                        {% endif %}
+
+                        {% for p in page_obj.paginator.page_range %}
+
+                        {% if page_obj.number == p %}
+                        <li class="page-item active" aria-current="page">
+                            <a class="page-link" href="?page={{ p }}">{{ p }}</a>
+                        </li>
+                        {% elif p > page_obj.number|add:-3 and p < page_obj.number|add:3 %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ p }}">{{ p }}</a>
+                        </li>
+                        {% endif %}
+
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Вперед</a>
+                        </li>
+                        {% endif %}
+
+                    </ul>
+                </nav>
+                {% endif %}
+            </div>
+
+
+        </div>
+
+    </div>
+</main>
+<footer>
+    {%include 'inc/_footer.html'%}
+</footer>
+<script src="{% static 'bootstrap/jquery.js' %}"></script>
+{%block myscript%}{%endblock%}
+<!--<script src="{% static 'bootstrap/js/popper.js' %}"></script>-->
+<!--<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>-->
+<!--<script src="{% static 'fontawesome/js/all.min.js' %}"></script>-->
+</body>
+</html>

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block page_title %}<h1 class="text-center page_title">Редактирование Заявки</h1>{% endblock %}
+{% block content %}
+<div class="card mt-3 card-single">
+    <div class="card-body">
+        <form method="post">{% csrf_token %}
+            <p class="ad_phone_p">Вы уверены, что хотите удалить эту анкету "{{ object }}" ?</p>
+            <button type="submit" class="btn ad_edit">Да, уверен</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

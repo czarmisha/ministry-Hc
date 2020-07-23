@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block page_title %}<h1 class="text-center page_title">Редактирование Анкеты</h1>{% endblock %}
+{% block content %}
+<form action="" method="post" class="mt-3 my_form">
+    {% csrf_token %}
+    {% for input in form %}
+    <div class="form-group row">
+        <label for="{{input.id_for_label}}" class="col-sm-4 col-form-label label_p">{{input.label}}</label>
+        <div class="col-sm-8">
+            {{input}}
+            {%if input.help_text%}
+            <p class="helptext">{{input.help_text}}</p>
+            {%endif%}
+            <ul class="errorlist">
+                {%for error in input.errors%}
+                <li>{{ error }}</li>
+                {%endfor%}
+            </ul>
+        </div>
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn ad_edit">Редактировать</button>
+</form>
+{% endblock %}
+{%block myscript%}
+<script>
+$('#id_region').on('change', function () {
+  regions = {
+    '1': 1703, '2': 1706, '3': 1708, '4':1710, '5': 1712, '6': 1714, '7': 1718, '8': 1722,
+    '9': 1724, '10': 1726,
+     '11': 1727, '12': 1730,
+    '13': 1733, '14': 1735,
+  };
+  num = $('#id_region option:selected').val();
+  $.ajax({
+    type: 'GET',
+    url: '/get_districts/',
+    data: {regionSOATO: regions[num],},
+    success: function (res) {
+      console.log(res);
+      let ls = '<option value="" selected=""></option>';
+      for(let i = 0; i < res.length; i++){
+       ls += `<option value="${i+1}">${res[i]['name']}</option>`;
+      }
+      document.getElementById("id_district").innerHTML = ls;
+      $("#id_district").trigger("chosen:updated");
+    },
+  });
+});
+
+
+</script>
+{%endblock%}

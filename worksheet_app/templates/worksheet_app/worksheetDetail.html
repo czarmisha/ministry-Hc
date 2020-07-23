@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{%block title%}{{ worksheet }}{%endblock%}
+{% block sidebar %}
+{% include 'inc/_sidebar.html' %}
+{% endblock %}
+{% block content %}
+<div class="card mt-3 card-single">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h2 class="text-center worksheet_title"><a href=""><b>{{ worksheet }}</b></a>
+        </h2>
+        <span class="badge ad_type buy">{{ worksheet.status }}</span>
+    </div>
+    <div class="card-body">
+        <p class="ad_phone_p">Имя: {{ worksheet.first_name }} </p>
+        <p class="ad_phone_p">Фамилия: {{ worksheet.last_name }} </p>
+        <p class="ad_phone_p">Год рождения: {{ worksheet.birth_date }} </p>
+        <p class="ad_phone_p">Регион: {{ worksheet.region }} </p>
+        <p class="ad_phone_p">Район: {{ worksheet.district }} </p>
+        <p class="ad_phone_p">Контактный номер №1: {{ worksheet.first_phone }} </p>
+        <p class="ad_phone_p">Контактный номер №2: {{ worksheet.second_phone }} </p>
+        <p class="ad_phone_p">Врач: {{ worksheet.shifokor }} </p>
+        <p class="ad_phone_p">Медсестра: {{ worksheet.hamshira }} </p>
+        <p class="ad_pub_date">Дата создания: {{ worksheet.pub_date }}</p>
+        <p class="ad_pub_date">Дата обновления: {{ worksheet.update_date }}</p>
+        <a type="submit" class="btn ad_edit" href="{% url 'edit' worksheet.slug %}">Редактировать</a>
+        <a type="submit" class="btn ad_edit" href="{% url 'delete' worksheet.slug %}">Удалить</a>
+    </div>
+</div>
+{% endblock %}

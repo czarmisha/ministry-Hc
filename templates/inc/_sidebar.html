@@ -1,0 +1,7 @@
+<div class="list-group">
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'list' request.user.pk %}" class="list-group-item list-group-item-action">Список ваших анкет</a>
+    {% endif %}
+    <a href="{% url 'create_worksheet' %}" class="list-group-item list-group-item-action">Создать Анкету</a>
+</div>
+
