@@ -1,17 +1,25 @@
 from django.contrib import admin
 from .models import *
 
-# class WorkSheetAdmin(admin.ModelAdmin):
-#     list_display = ('id', 'title', 'is_moderation', 'is_archive', 'is_paid', 'pub_date', 'current_user')
-#     list_display_links = ('id', 'title')
-#     search_fields = ('title',)
-#     # list_editable = ('pub_date',)
-#     list_filter = ('is_moderation', 'category', 'current_user', 'is_archive')
-#     # fields = ('title', 'category', 'is_archive', 'is_moderation')
-#     # readonly_fields = ('get_photo', 'views', 'created_at', 'updated_at')
+class WorkSheetAdmin(admin.ModelAdmin):
+    list_display = ('first_name', 'last_name', 'region', 'district', 'shifokor', 'hamshira')
+    list_display_links = ('first_name',)
+    search_fields = ('last_name', 'region', 'district', 'shifokor', 'hamshira',)
+    list_filter = ('region', 'shifokor', 'hamshira', 'birth_date', 'district',)
 
-# admin.site.register(WorkSheet, WorkSheetAdmin)
-admin.site.register(WorkSheet)
+
+class RegionAdmin(admin.ModelAdmin):
+    list_display = ('name', 'soato',)
+    list_display_links = ('name', 'soato',)
+    search_fields = ('name', 'soato',)
+
+
+class DistrictAdmin(admin.ModelAdmin):
+    list_display = ('name', 'soato', 'region')
+    list_display_links = ('name', 'soato',)
+    search_fields = ('name', 'soato',)
+
+admin.site.register(WorkSheet, WorkSheetAdmin)
 admin.site.register(Status)
-admin.site.register(Region)
-admin.site.register(District)
+admin.site.register(Region, RegionAdmin)
+admin.site.register(District, DistrictAdmin)
